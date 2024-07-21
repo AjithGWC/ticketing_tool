@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8">
+    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="dist/css/app.css" />
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <style>
+    .fd-c{
+      flex-direction: column;
+    }
+    nav {
+      border-bottom: 0px solid #e5e5e5;
+    }
+    body{
+      background-color: #113537;
+    }
+    .form-control{
+        width: 40%;
+    }
+    .success{
+      width: 16%;
+      position: absolute;
+      right: 5%;
+      display: none;
+    }
+  </style>
+  <body class="py-5">
+    <div class="flex">
+      <div class="content">
+        <div class="top-bar">
+          <div class="ml-auto">
+            <h1 id="user_id1"></h1>
+          </div>
+        </div>
+        <div class="box">
+          <div class="flex flex-col lg:flex-row items-center p-5">
+            <h1 class="text-lg font-bold">Ticket Add</h1>
+            <div class="flex mt-4 ml-auto lg:mt-0">
+              <a class="btn btn-primary shadow-md mr-2" href="index.html">back</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid1 grid-cols-12 gap-6 mt-5">
+          <div class="intro-y col-span-12 overflow-auto box">
+            <div class="p-5">
+                <div class="flex-col ml-6">
+                    <label class="form-control ml-6">Team Name</label>
+                    <select class="form-control ml-6" id="add_ticket_team_name">
+                        <option value="full_stack">Full Stack</option>
+                        <option value="data_analyist">Data Analyist</option>
+                        <option value="data_science">Data Science</option>
+                        <option value="data_engineer">Data Engineer</option>
+                    </select>
+                </div>
+                <div class="flex-col ml-6 mt-6">
+                    <label class="form-control ml-6">Ticket Name</label>
+                    <input class="form-control ml-6 w-96" type="text" name="add_ticket_ticket_name" id="add_ticket_ticket_name">
+                </div>
+                <div class="flex-col ml-6 mt-6">
+                    <label class="form-control ml-6">Ticket Detail</label>
+                    <textarea class="form-control ml-6 w-96" type="text" name="add_ticket_team_detail" id="add_ticket_team_detail"></textarea>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-primary shadow-md mt-6" id="add_ticket_submit" onclick="redirectTicket()">Submit</button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-success success p-2" id="add_ticket_success">Ticket Added Successfully</div>
+      </div>
+    </div>
+
+    <script>
+      let id = localStorage.getItem('user_name');
+      document.getElementById('user_id1').innerHTML = "Hello " + id + " !!";
+    </script>
+
+    <script src="https://unpkg.com/ryuu.js"></script>
+    <script src="js/app.js"></script>
+    <script src="dist/js/app.js"></script>
+  </body>
+</html>

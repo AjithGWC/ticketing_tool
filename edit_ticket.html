@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8">
+    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="dist/css/app.css" />
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <style>
+    .fd-c{
+      flex-direction: column;
+    }
+    nav {
+      border-bottom: 0px solid #e5e5e5;
+    }
+    body{
+      background-color: #113537;
+    }
+    .form-control{
+        width: 40%;
+    }
+    .success{
+        width: 16%;
+        position: absolute;
+        right: 5%;
+        display: none;
+    }
+  </style>
+  <body class="py-5">
+    <div class="flex">
+        <div class="content">
+            <div id ="content"></div>
+            <div class="bg-success success p-2" id="edit_ticket_success">Ticket Edited Successfully</div>
+        </div>
+    </div>
+
+    <script>
+      let id = localStorage.getItem('user_name');
+      document.getElementById('user_id3').innerHTML = "Hello " + id + " !!";
+    </script>
+    <script>
+        function getQueryParams() {
+        let params = {};
+        let queryString = window.location.search.slice(1);
+        console.log(queryString);
+        let pairs = queryString.split('&');
+        pairs.forEach(function(pair) {
+            let [key, value] = pair.split('=');
+            params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+        });
+        return params;
+        }
+
+        window.onload = function() {
+            let queryParams = getQueryParams();
+            let edit = queryParams['edit'];
+            console.log(edit);
+            let values = edit.split(',');
+            let content = document.getElementById('content');
+            let html = `
+                <div class="top-bar">
+                <div class="ml-auto">
+                    <h1 id="user_id3"></h1>
+                </div>
+                </div>
+                <div class="box">
+                <div class="flex flex-col lg:flex-row items-center p-5">
+                    <h1 class="text-lg font-bold">Ticket Add</h1>
+                    <div class="flex mt-4 ml-auto lg:mt-0">
+                    <a class="btn btn-primary shadow-md mr-2" href="index.html">back</a>
+                    </div>
+                </div>
+                </div>
+                <div class="grid1 grid-cols-12 gap-6 mt-5">
+                <div class="intro-y col-span-12 overflow-auto box">
+                    <div class="p-5">
+                        <div class="flex-col ml-6">
+                            <label class="form-control ml-6">Team Name</label>
+                            <select class="form-control ml-6" id="edit_ticket_team_name" value="${values[2]}">
+                                <option value="full_stack">Full Stack</option>
+                                <option value="data_analyist">Data Analyist</option>
+                                <option value="data_science">Data Science</option>
+                                <option value="data_engineer">Data Engineer</option>
+                            </select>
+                        </div>
+                        <div class="flex-col ml-6 mt-6">
+                            <label class="form-control ml-6">Ticket Name</label>
+                            <input class="form-control ml-6 w-96" type="text" value="${values[0]}" name="edit_ticket_ticket_name" id="edit_ticket_ticket_name">
+                        </div>
+                        <div class="flex-col ml-6 mt-6">
+                            <label class="form-control ml-6">Ticket Detail</label>
+                            <textarea class="form-control ml-6 w-96" type="text" name="edit_ticket_team_detail" id="edit_ticket_team_detail">${values[1]}</textarea>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary shadow-md mt-6" id="edit_ticket_submit" onclick="redirectEditTicket('${values[3]}')">Submit</button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            `;
+            content.innerHTML = html;
+            let selectElement = document.getElementById('edit_ticket_team_name');
+            (selectElement.options).forEach(function(option) {
+                if (option.value === values[2]) {
+                    option.selected = true;
+                }
+            });
+        };
+        
+    </script>
+
+    <script src="https://unpkg.com/ryuu.js"></script>
+    <script src="js/app.js"></script>
+    <script src="dist/js/app.js"></script>
+  </body>
+</html>

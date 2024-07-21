@@ -1,0 +1,51 @@
+{
+  "name": "Ticket Mangager",
+  "version": "0.1.0",
+  "size": {
+    "width": 5,
+    "height": 3
+  },
+  "mapping": [
+    {
+      "dataSetId": "8992457d-a393-4f03-8d4d-f026a7f563a9",
+      "alias": "ticket",
+      "fields": []
+    }
+  ],
+  "collections":[
+    {
+      "name": "Ticket_Manager_Ticket_tb",
+      "schema":{
+        "columns": [
+          { "name": "Name", "type": "STRING" },
+          { "name": "team_name", "type": "STRING" },
+          { "name": "details", "type": "STRING" },
+          { "name": "created_by_name", "type": "STRING" }
+        ]
+      },
+      "syncEnabled":true
+    },
+    {
+      "name": "Ticket_Manager_Ticket_tb"
+    }
+  ],
+  "collection":[
+    {
+      "name": "Ticket_Manager_Team_tb",
+      "schema":{
+        "columns": [
+          { "name": "team_name", "type": "STRING" },
+          { "name": "team_members", "type": "STRING" },
+          { "name": "created_by_name", "type": "STRING" }
+        ]
+      },
+      "syncEnabled":true
+    },
+    {
+      "name": "Ticket_Manager_Team_tb"
+    }
+  ],
+  "fileName": "manifest.json",
+  "id": "9ba6c724-cb13-479b-9ac3-c2729104bf61",
+  "proxyId": "049f889b-7f82-415e-9d71-06a8550d002c"
+}

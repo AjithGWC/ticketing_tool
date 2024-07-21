@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8">
+    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="dist/css/app.css" />
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <style>
+    .fd-c{
+      flex-direction: column;
+    }
+    nav {
+      border-bottom: 0px solid #e5e5e5;
+    }
+    body{
+      background-color: #C42021;
+    }
+  </style>
+  <body class="py-5">
+    <div class="flex">
+      <nav class="side-nav">
+        <a href="" class="intro-x flex items-center pl-5 pt-4">
+          <img alt="Rubick Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+          <span class="hidden xl:block text-white text-lg ml-3"> Sidebar </span> 
+        </a>
+        <!-- <ul>
+          <li id="nav-home"><a href="#home">Home</a></li>
+          <li id="nav-leads"><a href="#leads">Leads</a></li>
+          <li id="nav-demo"><a href="#demo">Demo</a></li>
+          <li id="nav-opportunities">
+            <a href="#opportunities">Opportunities</a>
+          </li>
+          <li id="nav-reports"><a href="#reports">Reports</a></li>
+        </ul> -->
+        <ul class="fd-c">   
+          <li class="p-0 mt-6 ml-0" id="nav-home">
+            <a href="#home" class="side-menu">
+              <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+              <div class="side-menu__title"> Ticket Manager</div>
+            </a>
+          </li>
+          <li class="p-0 ml-0" id="nav-leads" >
+            <a href="#leads"class="side-menu">
+              <div class="side-menu__icon"> <i data-feather="user"></i> </div>
+              <div class="side-menu__title"> Team Manager </div>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="content">
+        <div class="top-bar">
+          <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="box">
+          <div class="flex flex-col lg:flex-row items-center p-5">
+            <h1>sdfdsg</h1>
+            <div class="flex mt-4 ml-auto lg:mt-0">
+              <a class="btn btn-primary shadow-md mr-2" href="index.html">back</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid1 grid-cols-12 gap-6 mt-5">
+          <div class="intro-y col-span-12 overflow-auto ">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <main id="app"></main>
+    <script src="js/helpers.js"></script>
+    <script src="components/router.js"></script>
+    <script src="components/autocomplete.js"></script>
+    <script src="components/modal.js"></script>
+    <script src="components/table.js"></script>
+    <script src="components/floatingactionbutton.js"></script>
+    <script src="https://unpkg.com/ryuu.js"></script>
+    <script src="https://unpkg.com/@domoinc/domo-phoenix/build/global/domoPhoenixWithMaps.js"></script>
+    <script src="js/app.js"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=["your-google-map-api"]&libraries=places"></script>
+    <script src="dist/js/app.js"></script>
+  </body>
+</html>

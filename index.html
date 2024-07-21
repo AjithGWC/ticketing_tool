@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8">
+    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="dist/css/app.css" />
+    <link rel="stylesheet" href="styles/app.css" />
+  </head>
+  <style>
+    .fd-c{
+      flex-direction: column;
+    }
+    nav {
+      border-bottom: 0px solid #e5e5e5;
+    }
+    body{
+      background-color: #113537;
+    }
+    #delete_ticket_success{
+      display: none;
+    }
+  </style>
+  <body class="py-5">
+    <div class="flex">
+      <nav class="side-nav">
+        <a href="" class="intro-x flex items-center pl-5 pt-4">
+          <img alt="Rubick Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+          <span class="hidden xl:block text-white text-lg ml-3"> Ticketing Tool </span> 
+        </a>
+        <!-- <ul>
+          <li id="nav-home"><a href="#home">Home</a></li>
+          <li id="nav-leads"><a href="#leads">Leads</a></li>
+          <li id="nav-demo"><a href="#demo">Demo</a></li>
+          <li id="nav-opportunities">
+            <a href="#opportunities">Opportunities</a>
+          </li>
+          <li id="nav-reports"><a href="#reports">Reports</a></li>
+        </ul> -->
+        <ul class="fd-c">   
+          <li class="p-0 mt-6 ml-0" id="nav-home">
+            <a href="index.html" class="side-menu" id="tm">
+              <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+              <div class="side-menu__title"> Ticket Manager</div>
+            </a>
+          </li>
+          <li class="p-0 ml-0" id="nav-leads" >
+            <a href="user_index.html"class="side-menu" id="um">
+              <div class="side-menu__icon"> <i data-feather="users"></i> </div>
+              <div class="side-menu__title"> Users Manager </div>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <div class="content">
+        <div class="top-bar">
+          <div class="ml-auto">
+            <h1 id="user_id"></h1>
+          </div>
+        </div>
+        <div class="box">
+          <div class="flex flex-col lg:flex-row items-center p-5">
+            <h1 class="text-lg font-bold">Ticket Manager</h1>
+            <div class="flex mt-4 ml-auto lg:mt-0">
+              <a class="btn btn-primary shadow-md mr-2" href="add_ticket.html">add</a>
+            </div>
+          </div>
+        </div>
+        <div class="grid1 grid-cols-12 gap-6 mt-5">
+          <div class="intro-y col-span-12 overflow-auto ">
+            <table id="example" class="table table-report -mt-2 example" >
+              <thead>
+                <tr class="intro-x">
+                    <th class=" text-center whitespace-nowrap">sl</th>
+                    <th class=" text-center whitespace-nowrap">Name</th>
+                    <th class=" text-center whitespace-nowrap">Team Name</th>
+                    <th class=" text-center whitespace-nowrap">Details</th>
+                    <th class=" text-center whitespace-nowrap">Created By</th>
+                    <th class=" text-center whitespace-nowrap">Action</th>
+                </tr>
+              </thead>
+                <tbody  id="ticket_index">
+                  <!-- <tr class="text-center"> -->
+                    <!-- <td class="table-report__action">
+                      <div class="flex justify-center items-center">
+                        <div id="header-icon-dropdown" class="p-5">
+                          <div class="preview">
+                            <div class="flex justify-center">
+                              <div class="dropdown">
+                                <button class="dropdown-toggle btn btn-primary" data-tw-toggle="dropdown"><i data-feather="menu" class="w-4 h-4"></i></button>
+                                <div class="dropdown-menu w-80">
+                                  <ul class="box grey">
+                                    <li><a class="flex items-center text-pending mr-3" href=""><i data-feather="check-square" class="w-4 h-4 mr-2"></i>edit</a></li>
+                                    <br>
+                                    <li><a href="" class="flex items-center text-danger mr-3"><i data-feather="trash-2" class="w-4 h-4 mr-1"></i>delete</a></li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td> -->
+                  <!-- </tr> -->
+                </tbody>
+            </table>
+            <div class="bg-success success p-2 w-64 ml-auto" id="delete_ticket_success">Ticket Deleted Successfully</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let id = localStorage.getItem('user_name');
+      document.getElementById('user_id').innerHTML = "Hello " + id + " !!";
+      if(window.location.pathname == "/index.html"){
+        let tm = document.getElementById("tm");
+        tm.classList.add("side-menu--active");
+      }
+    </script>
+
+    <script src="https://unpkg.com/ryuu.js"></script>
+    <script src="js/app.js"></script>
+    <script src="dist/js/app.js"></script>
+  </body>
+</html>
