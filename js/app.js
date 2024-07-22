@@ -60,6 +60,55 @@ if(window.location.pathname == "/index.html"){
   }); 
 }
 
+if(window.location.pathname == "/add_ticket.html"){
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
+    console.log(datas);
+    const selectBox = document.getElementById('add_ticket_team_name');
+
+    datas.forEach(async function(items){
+      let optionElement = document.createElement('option'); 
+      optionElement.value = items.content.team_name;
+      optionElement.textContent = items.content.team_name;
+      selectBox.appendChild(optionElement);
+    });
+  });
+}
+
+if(window.location.pathname == "/edit_ticket.html"){
+  function getQueryParams() {
+    let params = {};
+    let queryString = window.location.search.slice(1);
+    // console.log(queryString);
+    let pairs = queryString.split('&');
+    pairs.forEach(function(pair) {
+        let [key, value] = pair.split('=');
+        params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+    });
+    return params;
+  }
+
+  let queryParams = getQueryParams();
+  let edit = queryParams['edit'];
+  let values = edit.split(',');
+  console.log(values);
+
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
+    console.log(datas);
+    const selectBox = document.getElementById('edit_ticket_team_name');
+
+    datas.forEach(async function(items){
+      let optionElement = document.createElement('option'); 
+      optionElement.value = items.content.team_name;
+      optionElement.textContent = items.content.team_name;
+      if (items.content.team_name === values[2]) {
+        optionElement.selected = true;
+      }
+      selectBox.appendChild(optionElement);
+    });
+
+  });
+}
+
 function redirectTicket() {
   let alert = document.getElementById('add_ticket_success');
   alert.style.display = "block";
@@ -72,19 +121,24 @@ function redirectTicket() {
   //     console.log(domo.env.userId);
   // });
   let id = localStorage.getItem('user_name');
-
-  const request = {
-    "content":{
-      'Name': `${Name}`,
-      'team_name': `${team_name}`,
-      'details': `${detail}`,
-      'created_by_name': `${id}`,
+  if(team_name == ''){
+    alert('Team Name cannot be empty');
+  }else if(Name == ''){
+    alert('Name cannot be empty');
+  }else{
+    const request = {
+      "content":{
+        'Name': `${Name}`,
+        'team_name': `${team_name}`,
+        'details': `${detail}`,
+        'created_by_name': `${id}`,
+      }
     }
+    domo.post(`/domo/datastores/v1/collections/Ticket_Manager_Ticket_tb/documents/`, request); 
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 3000);
   }
-  domo.post(`/domo/datastores/v1/collections/Ticket_Manager_Ticket_tb/documents/`, request); 
-  setTimeout(() => {
-    window.location.href = "index.html";
-  }, 3000);
 }
 
 function EditTicket(id){
@@ -161,18 +215,24 @@ function redirectTeam(){
 
   let id = localStorage.getItem('user_name');
 
-  const request = {
-    "content":{
-      'team_name': `${team_name}`,
-      'team_members': `${selectedOptions}`,
-      'created_by_name': `${id}`,
+  if(team_name == ''){
+    alert('Team Name cannot be empty');
+  }else if(selectElement == ''){
+    alert('User cannot be empty');
+  }else{
+    const request = {
+      "content":{
+        'team_name': `${team_name}`,
+        'team_members': `${selectedOptions}`,
+        'created_by_name': `${id}`,
+      }
     }
+    // console.log(request);
+    domo.post(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`, request); 
+    setTimeout(() => {
+      window.location.href = "user_index.html";
+    }, 3000);
   }
-  // console.log(request);
-  domo.post(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`, request); 
-  setTimeout(() => {
-    window.location.href = "user_index.html";
-  }, 3000);
 }
 
 if(window.location.pathname == "/user_index.html"){
@@ -222,12 +282,12 @@ if(window.location.pathname == "/user_index.html"){
                         </button>
                         <div class="dropdown-menu w-80">
                           <ul class="box grey p-2">
-                            <li><a class="flex items-center text-pending mr-3" id="edit_${id}" onclick="EditTicket('${id}')">
+                            <li><a class="flex items-center text-pending mr-3" id="edit_${id}" onclick="EditTeam('${id}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit block" style=" height: 17px;">
                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                             edit</a></li>
                             <br>
-                            <li><a class="flex items-center text-danger ml-1 mr-3" onclick="DeleteTicket('${id}')">
+                            <li><a class="flex items-center text-danger ml-1 mr-3" onclick="DeleteTeam('${id}')">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2 block mr-1 mx-auto"><polyline points="3 6 5 6 21 6"></polyline>
                                 <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                             delete</a></li>

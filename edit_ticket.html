@@ -59,7 +59,7 @@
         function getQueryParams() {
         let params = {};
         let queryString = window.location.search.slice(1);
-        console.log(queryString);
+        // console.log(queryString);
         let pairs = queryString.split('&');
         pairs.forEach(function(pair) {
             let [key, value] = pair.split('=');
@@ -71,7 +71,7 @@
         window.onload = function() {
             let queryParams = getQueryParams();
             let edit = queryParams['edit'];
-            console.log(edit);
+            // console.log(edit);
             let values = edit.split(',');
             let content = document.getElementById('content');
             let html = `
@@ -80,12 +80,7 @@
                         <div class="p-5">
                             <div class="flex-col ml-6">
                                 <label class="form-control ml-6">Team Name</label>
-                                <select class="form-control ml-6" id="edit_ticket_team_name" value="${values[2]}">
-                                    <option value="full_stack">Full Stack</option>
-                                    <option value="data_analyist">Data Analyist</option>
-                                    <option value="data_science">Data Science</option>
-                                    <option value="data_engineer">Data Engineer</option>
-                                </select>
+                                <select class="form-control ml-6" id="edit_ticket_team_name"></select>
                             </div>
                             <div class="flex-col ml-6 mt-6">
                                 <label class="form-control ml-6">Ticket Name</label>
@@ -103,12 +98,14 @@
                 </div>
             `;
             content.innerHTML = html;
-            let selectElement = document.getElementById('edit_ticket_team_name');
-            (selectElement.options).forEach(function(option) {
-                if (option.value === values[2]) {
-                    option.selected = true;
-                }
-            });
+            // let selectElement = document.getElementById('edit_ticket_team_name');
+            // console.log(selectElement);
+            // (selectElement.options).forEach(function(option) {
+            //     console.log(option);
+            //     if (option.value === values[2]) {
+            //         option.selected = true;
+            //     }
+            // });
         };
         
     </script>
