@@ -26,11 +26,6 @@
       "syncEnabled":true
     },
     {
-      "name": "Ticket_Manager_Ticket_tb"
-    }
-  ],
-  "collection":[
-    {
       "name": "Ticket_Manager_Team_tb",
       "schema":{
         "columns": [
@@ -40,9 +35,6 @@
         ]
       },
       "syncEnabled":true
-    },
-    {
-      "name": "Ticket_Manager_Team_tb"
     }
   ],
   "fileName": "manifest.json",

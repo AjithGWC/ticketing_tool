@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="dist/css/app.css" />
     <link rel="stylesheet" href="styles/app.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
   </head>
   <style>
     .fd-c{
@@ -72,22 +75,13 @@
               <thead>
                 <tr class="intro-x">
                     <th class=" text-center whitespace-nowrap">sl</th>
-                    <th class=" text-center whitespace-nowrap">company_name_english</th>
-                    <th class=" text-center whitespace-nowrap">company_name_arabic</th>
-                    <th class=" text-center whitespace-nowrap">cr_no</th>
-                    <th class=" text-center whitespace-nowrap">location</th>
+                    <th class=" text-center whitespace-nowrap">Team Name</th>
+                    <th class=" text-center whitespace-nowrap">Team Members</th>
+                    <th class=" text-center whitespace-nowrap">Created By</th>
                     <th class="text-center whitespace-nowrap">action</th>
                 </tr>
               </thead>
-                <tbody>
-                  <tr class="text-center">
-                    <td>1</td>
-                    <td class="tdclass">rwe</td>
-                    <td class="tdclass">rwe</td>
-                    <td class="tdclass">ree</td>
-                    <td class="tdclass">ere</td>
-                    <td class="tdclass">ere</td>
-                  </tr>
+                <tbody id="team_list">
                 </tbody>
             </table>
           </div>
@@ -105,7 +99,7 @@
     </script>
     
     <script src="https://unpkg.com/ryuu.js"></script>
-    <script src="js/team.js"></script>
+    <script src="js/app.js"></script>
     <script src="dist/js/app.js"></script>
   </body>
 </html>

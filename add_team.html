@@ -6,33 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="dist/css/app.css" />
     <link rel="stylesheet" href="styles/app.css" />
-    <link rel="stylesheet" href="js/jquery.js" />
-    <link rel="stylesheet" href="js/select2.js" />
-    <link rel="stylesheet" href="dist/css/select2.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
   </head>
   <style>
-    .fd-c{
+    .fd-c {
       flex-direction: column;
     }
     nav {
       border-bottom: 0px solid #e5e5e5;
     }
-    body{
+    body {
       background-color: #113537;
     }
-    .form-control{
-        width: 40%;
+    .form-control {
+      width: 40%;
     }
-    .success{
+    .success {
       width: 16%;
       position: absolute;
       right: 5%;
       display: none;
     }
-    .d-wb{
-      display: -webkit-inline-box;
-    }
-    .w-ts{
+    .w-ts {
       width: 450px;
     }
   </style>
@@ -55,41 +52,39 @@
         <div class="grid1 grid-cols-12 gap-6 mt-5">
           <div class="intro-y col-span-12 overflow-auto box">
             <div class="p-5">
-                <div class="flex-col ml-6">
-                    <label class="form-control ml-6">Team Name</label>
-                    <input class="form-control ml-6" type="text" name="add_ticket_team_name" id="add_ticket_team_name">
+              <div class="flex-col ml-6">
+                <label class="form-control ml-6">Team Name</label>
+                <input class="form-control ml-6" type="text" name="add_ticket_team_name" id="add_ticket_team_name">
+              </div>
+              <div class="flex ml-6 mt-6">
+                <div class="flex">
+                  <label class="form-control ml-6">Users Name</label>
+                  <select class="w-full ml-3 users" id="add_ticket_team_member" name="add_ticket_team_member[]" multiple></select>
                 </div>
-                <div class="flex ml-6 mt-6">
-                  <div class=" d-wb">
-                    <label class="form-control ml-6">Users Name</label>
-                    <select class="w-full ml-6 tom-select users" id="add_ticket_team_member">
-                      <option value="full_stack">Full Stack</option>
-                      <option value="data_analyist">Data Analyist</option>
-                      <option value="data_science">Data Science</option>
-                      <option value="data_engineer">Data Engineer</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="text-center">
-                  <button class="btn btn-primary shadow-md mt-6" id="add_team_success" onclick="redirectTeam()">Submit</button>
-                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-primary shadow-md mt-6" id="add_team_submit" onclick="redirectTeam()">Submit</button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="bg-success success p-2" id="add_ticket_success">Team Added Successfully</div>
+        <div class="bg-success success p-2" id="add_team_success">Team Added Successfully</div>
       </div>
     </div>
 
     <script>
-      $(document).ready(function() {
-          $('.users').select2();
-      });
       let id = localStorage.getItem('user_name');
       document.getElementById('team_id1').innerHTML = "Hello " + id + " !!";
     </script>
 
     <script src="https://unpkg.com/ryuu.js"></script>
-    <script src="js/team.js"></script>
+    <script src="js/app.js"></script>
     <script src="dist/js/app.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $('.users').select2();
+      });
+    </script>
   </body>
 </html>
