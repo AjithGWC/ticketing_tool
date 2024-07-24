@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="utf-8">
+    <link href="dist/images/logo.svg" rel="shortcut icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="dist/css/app.css" />
+    <link rel="stylesheet" href="styles/app.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0/js/select2.min.js"></script>
+  </head>
+  <style>
+    .fd-c {
+      flex-direction: column;
+    }
+    nav {
+      border-bottom: 0px solid #e5e5e5;
+    }
+    body {
+      background-color: #113537;
+    }
+    .form-control {
+      width: 40%;
+    }
+    .success {
+      width: 16%;
+      position: absolute;
+      right: 5%;
+      display: none;
+    }
+    .w-ts {
+      width: 450px;
+    }
+  </style>
+  <body class="py-5">
+    <div class="flex">
+      <div class="content">
+        <div class="top-bar">
+          <div class="ml-auto">
+            <h1 id="team_id2"></h1>
+          </div>
+        </div>
+        <div class="box">
+          <div class="flex flex-col lg:flex-row items-center p-5">
+            <h1 class="text-lg font-bold">Team Edit</h1>
+            <div class="flex mt-4 ml-auto lg:mt-0">
+              <a class="btn btn-primary shadow-md mr-2" href="user_index.html">back</a>
+            </div>
+          </div>
+        </div>
+        <div id ="content"></div>
+        <div class="bg-success success p-2" id="editteam_success">Team Added Successfully</div>
+      </div>
+    </div>
+
+    <script>
+      let id = localStorage.getItem('user_name');
+      document.getElementById('team_id2').innerHTML = "Hello " + id + " !!";
+    </script>
+
+    <script src="https://unpkg.com/ryuu.js"></script>
+    <script src="js/app.js"></script>
+    <script src="dist/js/app.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $('.users').select2();
+      });
+    </script>
+    <script>
+        function getQueryParams() {
+            let params = {};
+            let queryString = window.location.search.slice(1);
+            // console.log(queryString);
+            let pairs = queryString.split('&');
+            pairs.forEach(function(pair) {
+                let [key, value] = pair.split('=');
+                params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+            });
+            return params;
+        }
+
+        window.onload = function() {
+            let queryParams = getQueryParams();
+            let edit = queryParams['edit'];
+            // console.log(edit);
+            let values = edit.split(',');
+            console.log(values);
+            let content = document.getElementById('content');
+            let html = `
+                <div class="grid1 grid-cols-12 gap-6 mt-5">
+                <div class="intro-y col-span-12 overflow-auto box">
+                    <div class="p-5">
+                    <div class="flex-col ml-6">
+                        <label class="form-control ml-6">Team Name</label>
+                        <input class="form-control ml-6" type="text" name="editticket_team_name" value="${values[0]}" id="editticket_team_name">
+                    </div>
+                    <div class="flex ml-6 mt-6">
+                        <div class="flex">
+                        <label class="form-control ml-6">Users Name</label>
+                        <select class="w-full ml-3 users" id="edit_ticket_team_member" name="edit_ticket_team_member[]" multiple></select>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary shadow-md mt-6" id="editteam_submit" onclick="redirectUpdateTeam('${values[values.length -1]}')">Submit</button>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            `;
+            content.innerHTML = html;
+        }
+    </script>
+  </body>
+</html>

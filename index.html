@@ -42,7 +42,7 @@
         </ul> -->
         <ul class="fd-c">   
           <li class="p-0 mt-6 ml-0" id="nav-home">
-            <a href="index.html" class="side-menu" id="tm">
+            <a href="index.html" class="side-menu side-menu--active" id="tm">
               <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
               <div class="side-menu__title"> Ticket Manager</div>
             </a>
@@ -114,12 +114,9 @@
     </div>
 
     <script>
-      let id = localStorage.getItem('user_name');
-      document.getElementById('user_id').innerHTML = "Hello " + id + " !!";
-      if(window.location.pathname == "/index.html"){
-        let tm = document.getElementById("tm");
-        tm.classList.add("side-menu--active");
-      }
+      // let id = localStorage.getItem('user_name');
+      // document.getElementById('user_id').innerHTML = "Hello " + id + " !!";
+      
     </script>
 
     <script src="https://unpkg.com/ryuu.js"></script>

@@ -48,7 +48,7 @@
             </a>
           </li>
           <li class="p-0 ml-0" id="nav-leads" >
-            <a href="user_index.html"class="side-menu" id="um">
+            <a href="user_index.html"class="side-menu side-menu--active" id="um">
               <div class="side-menu__icon"> <i data-feather="users"></i> </div>
               <div class="side-menu__title"> Users Manager </div>
             </a>
@@ -92,10 +92,7 @@
     <script>
       let id = localStorage.getItem('user_name');
       document.getElementById('team_id').innerHTML = "Hello " + id + " !!";
-      if(window.location.pathname == "/user_index.html"){
-        let um = document.getElementById("um");
-        um.classList.add("side-menu--active");
-      }
+      
     </script>
     
     <script src="https://unpkg.com/ryuu.js"></script>

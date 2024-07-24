@@ -1,11 +1,10 @@
+
 if(window.location.pathname == "/index.html"){
   domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
     data.forEach(async function(items){
       if (items.id == domo.env.userId) {
-        let user_id = domo.env.userId;
         let displayName = items.displayName;
-        localStorage.setItem('user_id', user_id);
-        localStorage.setItem('user_name', displayName);
+        document.getElementById('user_id').innerHTML = "Hello " + displayName + " !!";
       }
     });
   });
@@ -64,6 +63,13 @@ if(window.location.pathname == "/add_ticket.html"){
   domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
     console.log(datas);
     const selectBox = document.getElementById('add_ticket_team_name');
+    domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+      data.forEach(async function(items){
+        if (items.id == domo.env.userId) {
+          document.getElementById('user_id1').innerHTML = "Hello " + items.displayName + " !!";
+        }
+      });
+    });
 
     datas.forEach(async function(items){
       let optionElement = document.createElement('option'); 
@@ -75,6 +81,13 @@ if(window.location.pathname == "/add_ticket.html"){
 }
 
 if(window.location.pathname == "/edit_ticket.html"){
+  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+    data.forEach(async function(items){
+      if (items.id == domo.env.userId) {
+        document.getElementById('user_id3').innerHTML = "Hello " + items.displayName + " !!";
+      }
+    });
+  });
   function getQueryParams() {
     let params = {};
     let queryString = window.location.search.slice(1);
@@ -193,6 +206,13 @@ function DeleteTicket(id) {
 
 
 if(window.location.pathname == "/add_team.html"){
+  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+    data.forEach(async function(items){
+      if (items.id == domo.env.userId) {
+        document.getElementById('team_id1').innerHTML = "Hello " + items.displayName + " !!";
+      }
+    });
+  });
   domo.get("/domo/users/v1?includeDetails=true&limit=200").then(function(data){
     const selectBox = document.getElementById('add_ticket_team_member');
 
@@ -236,6 +256,13 @@ function redirectTeam(){
 }
 
 if(window.location.pathname == "/user_index.html"){
+  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+    data.forEach(async function(items){
+      if (items.id == domo.env.userId) {
+        document.getElementById('team_id').innerHTML = "Hello " + items.displayName + " !!";
+      }
+    });
+  });
   domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
     // console.log(datas);
     let index = document.getElementById('team_list');
@@ -304,4 +331,87 @@ if(window.location.pathname == "/user_index.html"){
       index.innerHTML += html;
     });
   });
+}
+
+function EditTeam(id){
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/${id}`).then(function(edit){
+    
+    let editArray = [];
+    let team_members = (edit.content.team_members).split(',')
+    editArray.push(edit.content.team_name);
+    editArray.push(edit.content.team_members);
+    editArray.push(edit.id);
+    // console.log(editArray);
+
+    let url = `edit_team.html?edit=${encodeURIComponent(editArray)}`;
+    window.location.href = url;
+  });
+}
+
+if(window.location.pathname == "/edit_team.html"){
+  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+    data.forEach(async function(items){
+      if (items.id == domo.env.userId) {
+        document.getElementById('team_id2').innerHTML = "Hello " + items.displayName + " !!";
+      }
+    });
+  });
+  function getQueryParams() {
+    let params = {};
+    let queryString = window.location.search.slice(1);
+    let pairs = queryString.split('&');
+    // console.log(pairs);
+    pairs.forEach(function(pair) {
+        let [key, value] = pair.split('=');
+        params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+    });
+    return params;
+  }
+
+  let queryParams = getQueryParams();
+  let edit = queryParams['edit'];
+  let values = edit.split(',');
+  let centerValues = values.slice(1, -1)
+  console.log(centerValues);
+
+  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+    // console.log(data);
+    const selectBox = document.getElementById('edit_ticket_team_member');
+
+    data.forEach(async function(items){
+      // console.log(items);
+      let optionElement = document.createElement('option'); 
+      optionElement.value = items.displayName;
+      optionElement.textContent = items.displayName;
+      centerValues.forEach(function(member){
+        if (items.displayName === member) {
+          optionElement.selected = true;
+        }
+      });
+      selectBox.appendChild(optionElement);
+    });
+  });
+}
+
+function redirectUpdateTeam(update){
+  // console.log(update);
+  let alert = document.getElementById('editteam_success');
+  alert.style.display = "block";
+  let team_name = document.getElementById('editticket_team_name').value;
+  let team_members = document.getElementById('edit_ticket_team_member').value;
+
+  let id = localStorage.getItem('user_name');
+  const request = {
+    "content":{
+      'Name': `${Name}`,
+      'team_name': `${team_name}`,
+      'team_members': `${team_members}`,
+      'created_by_name': `${id}`,
+    }
+  }
+
+  domo.put(`/domo/datastores/v1/collections/Ticket_Manager_Ticket_tb/documents/${update}`, request);
+  setTimeout(() => {
+    window.location.href = "index.html";
+  }, 3000);
 }
