@@ -35,6 +35,26 @@
   </style>
   <body class="py-5">
     <div class="flex">
+      <nav class="side-nav">
+        <a href="" class="intro-x flex items-center pl-5 pt-4">
+          <img alt="Rubick Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+          <span class="hidden xl:block text-white text-lg ml-3"> Ticketing Tool </span> 
+        </a>
+        <ul class="fd-c">   
+          <li class="p-0 mt-6 ml-0" id="nav-home">
+            <a href="/" class="side-menu">
+              <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+              <div class="side-menu__title"> Ticket Manager</div>
+            </a>
+          </li>
+          <li class="p-0 ml-0" id="nav-leads" >
+            <a href="user_index.html"class="side-menu side-menu--active" id="um">
+              <div class="side-menu__icon"> <i data-feather="users"></i> </div>
+              <div class="side-menu__title"> Users Manager </div>
+            </a>
+          </li>
+        </ul>
+      </nav>
       <div class="content">
         <div class="top-bar">
           <div class="ml-auto">
@@ -43,10 +63,8 @@
         </div>
         <div class="box">
           <div class="flex flex-col lg:flex-row items-center p-5">
+            <a class="btn btn-primary shadow-md mr-2" href="/user_index.html"><i data-feather="arrow-left"></i></a>
             <h1 class="text-lg font-bold">Team Edit</h1>
-            <div class="flex mt-4 ml-auto lg:mt-0">
-              <a class="btn btn-primary shadow-md mr-2" href="user_index.html">back</a>
-            </div>
           </div>
         </div>
         <div id ="content"></div>
@@ -55,8 +73,8 @@
     </div>
 
     <script>
-      let id = localStorage.getItem('user_name');
-      document.getElementById('team_id2').innerHTML = "Hello " + id + " !!";
+      let displayName = localStorage.getItem('user_id');
+      document.getElementById('user_id3').innerHTML = "Hello " + displayName + " !!";
     </script>
 
     <script src="https://unpkg.com/ryuu.js"></script>
@@ -82,34 +100,55 @@
         }
 
         window.onload = function() {
-            let queryParams = getQueryParams();
-            let edit = queryParams['edit'];
-            // console.log(edit);
-            let values = edit.split(',');
-            console.log(values);
-            let content = document.getElementById('content');
-            let html = `
-                <div class="grid1 grid-cols-12 gap-6 mt-5">
-                <div class="intro-y col-span-12 overflow-auto box">
-                    <div class="p-5">
-                    <div class="flex-col ml-6">
-                        <label class="form-control ml-6">Team Name</label>
-                        <input class="form-control ml-6" type="text" name="editticket_team_name" value="${values[0]}" id="editticket_team_name">
-                    </div>
-                    <div class="flex ml-6 mt-6">
-                        <div class="flex">
-                        <label class="form-control ml-6">Users Name</label>
-                        <select class="w-full ml-3 users" id="edit_ticket_team_member" name="edit_ticket_team_member[]" multiple></select>
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <button class="btn btn-primary shadow-md mt-6" id="editteam_submit" onclick="redirectUpdateTeam('${values[values.length -1]}')">Submit</button>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            `;
-            content.innerHTML = html;
+          let queryParams = getQueryParams();
+          let edit = queryParams['edit'];
+          // console.log(edit);
+          let values = edit.split(',');
+          console.log(values);
+          let content = document.getElementById('content');
+          let html = `
+              <div class="grid1 grid-cols-12 gap-6 mt-5">
+              <div class="intro-y col-span-12 overflow-auto box">
+                  <div class="p-5">
+                  <div class="flex-col ml-6">
+                      <label class="form-control ml-6">Team Name</label>
+                      <input class="form-control ml-6" type="text" name="editticket_team_name" value="${values[0]}" id="editticket_team_name">
+                  </div>
+                  <div class="flex ml-6 mt-6">
+                      <div class="flex">
+                      <label class="form-control ml-6">Users Name</label>
+                      <select class="w-full ml-3 users" id="edit_ticket_team_member" name="edit_ticket_team_member[]" multiple></select>
+                      </div>
+                  </div>
+                  <div class="text-center">
+                      <button class="btn btn-primary shadow-md mt-6" id="editteam_submit" onclick="redirectUpdateTeam('${values[values.length -1]}')">Submit</button>
+                  </div>
+                  </div>
+              </div>
+              </div>
+          `;
+          content.innerHTML = html;
+          let centerValues = values.slice(1, -1)
+          console.log(centerValues);
+
+          domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+            // console.log(data);
+            const selectBox = document.getElementById('edit_ticket_team_member');
+            console.log(selectBox);
+            data.forEach(async function(items){
+              // console.log(items);
+              let optionElement = document.createElement('option'); 
+              optionElement.value = items.displayName;
+              optionElement.textContent = items.displayName;
+              centerValues.forEach(function(member){
+                if (items.displayName === member) {
+                  console.log(optionElement);
+                  optionElement.selected = true;
+                }
+              });
+              selectBox.appendChild(optionElement);
+            });
+          });
         }
     </script>
   </body>

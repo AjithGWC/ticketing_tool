@@ -37,6 +37,36 @@
       "syncEnabled":true
     }
   ],
+  "workflowMapping": [
+    {
+      "alias": "send_email",
+      "modelId": null,
+      "version": null,
+      "parameters": [
+        {
+          "name": "to",
+          "aliasedName": "to",
+          "type": "person",
+          "list": false,
+          "children": []
+        },
+        {
+          "name": "subject",
+          "aliasedName": "subject",
+          "type": "text",
+          "list": false,
+          "children": []
+        },
+        {
+          "name": "body",
+          "aliasedName": "body",
+          "type": "text",
+          "list": false,
+          "children": []
+        }
+      ]
+    }
+  ],
   "fileName": "manifest.json",
   "id": "9ba6c724-cb13-479b-9ac3-c2729104bf61",
   "proxyId": "049f889b-7f82-415e-9d71-06a8550d002c"

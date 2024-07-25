@@ -32,6 +32,26 @@
   </style>
   <body class="py-5">
     <div class="flex">
+      <nav class="side-nav">
+        <a href="" class="intro-x flex items-center pl-5 pt-4">
+          <img alt="Rubick Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+          <span class="hidden xl:block text-white text-lg ml-3"> Ticketing Tool </span> 
+        </a>
+        <ul class="fd-c">   
+          <li class="p-0 mt-6 ml-0" id="nav-home">
+            <a href="/" class="side-menu side-menu--active">
+              <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+              <div class="side-menu__title"> Ticket Manager</div>
+            </a>
+          </li>
+          <li class="p-0 ml-0" id="nav-leads" >
+            <a href="user_index.html"class="side-menu" id="um">
+              <div class="side-menu__icon"> <i data-feather="users"></i> </div>
+              <div class="side-menu__title"> Users Manager </div>
+            </a>
+          </li>
+        </ul>
+      </nav>
       <div class="content">
         <div class="top-bar">
           <div class="ml-auto">
@@ -40,10 +60,8 @@
         </div>
         <div class="box">
           <div class="flex flex-col lg:flex-row items-center p-5">
+            <a class="btn btn-primary shadow-md mr-2" href="/"><i data-feather="arrow-left"></i></a>
             <h1 class="text-lg font-bold">Ticket Add</h1>
-            <div class="flex mt-4 ml-auto lg:mt-0">
-              <a class="btn btn-primary shadow-md mr-2" href="index.html">back</a>
-            </div>
           </div>
         </div>
         <div class="grid1 grid-cols-12 gap-6 mt-5">
@@ -72,8 +90,8 @@
     </div>
 
     <script>
-      let id = localStorage.getItem('user_name');
-      document.getElementById('user_id1').innerHTML = "Hello " + id + " !!";
+      let displayName = localStorage.getItem('user_id');
+      document.getElementById('user_id3').innerHTML = "Hello " + displayName + " !!";
     </script>
 
     <script src="https://unpkg.com/ryuu.js"></script>

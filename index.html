@@ -42,7 +42,7 @@
         </ul> -->
         <ul class="fd-c">   
           <li class="p-0 mt-6 ml-0" id="nav-home">
-            <a href="index.html" class="side-menu side-menu--active" id="tm">
+            <a href="/" class="side-menu side-menu--active" id="tm">
               <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
               <div class="side-menu__title"> Ticket Manager</div>
             </a>
@@ -114,8 +114,8 @@
     </div>
 
     <script>
-      // let id = localStorage.getItem('user_name');
-      // document.getElementById('user_id').innerHTML = "Hello " + id + " !!";
+      let displayName = localStorage.getItem('user_id');
+      document.getElementById('user_id').innerHTML = "Hello " + displayName + " !!";
       
     </script>
 

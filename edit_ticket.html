@@ -32,6 +32,26 @@
   </style>
   <body class="py-5">
     <div class="flex">
+        <nav class="side-nav">
+            <a href="" class="intro-x flex items-center pl-5 pt-4">
+              <img alt="Rubick Tailwind HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+              <span class="hidden xl:block text-white text-lg ml-3"> Ticketing Tool </span> 
+            </a>
+            <ul class="fd-c">   
+              <li class="p-0 mt-6 ml-0" id="nav-home">
+                <a href="/" class="side-menu side-menu--active">
+                  <div class="side-menu__icon"> <i data-feather="credit-card"></i> </div>
+                  <div class="side-menu__title"> Ticket Manager</div>
+                </a>
+              </li>
+              <li class="p-0 ml-0" id="nav-leads" >
+                <a href="user_index.html"class="side-menu" id="um">
+                  <div class="side-menu__icon"> <i data-feather="users"></i> </div>
+                  <div class="side-menu__title"> Users Manager </div>
+                </a>
+              </li>
+            </ul>
+          </nav>
         <div class="content">
             <div class="top-bar">
                 <div class="ml-auto">
@@ -40,10 +60,8 @@
             </div>
             <div class="box">
                 <div class="flex flex-col lg:flex-row items-center p-5">
+                    <a class="btn btn-primary shadow-md mr-2" href="/"><i data-feather="arrow-left"></i></a>
                     <h1 class="text-lg font-bold">Ticket Edit</h1>
-                    <div class="flex mt-4 ml-auto lg:mt-0">
-                    <a class="btn btn-primary shadow-md mr-2" href="index.html">back</a>
-                    </div>
                 </div>
             </div>
             <div id ="content"></div>
@@ -52,8 +70,8 @@
     </div>
 
     <script>
-      let id = localStorage.getItem('user_name');
-      document.getElementById('user_id3').innerHTML = "Hello " + id + " !!";
+        let displayName = localStorage.getItem('user_id');
+        document.getElementById('user_id3').innerHTML = "Hello " + displayName + " !!";
     </script>
     <script>
         function getQueryParams() {
@@ -80,7 +98,7 @@
                         <div class="p-5">
                             <div class="flex-col ml-6">
                                 <label class="form-control ml-6">Team Name</label>
-                                <select class="form-control ml-6" id="edit_ticket_team_name" value="${values[2]}"></select>
+                                <select class="form-control ml-6" id="edit_ticket_team_name"></select>
                             </div>
                             <div class="flex-col ml-6 mt-6">
                                 <label class="form-control ml-6">Ticket Name</label>
@@ -106,6 +124,21 @@
             //         option.selected = true;
             //     }
             // });
+            domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
+                // console.log(datas);
+                const selectBox = document.getElementById('edit_ticket_team_name');
+                console.log(selectBox);
+                datas.forEach(async function(items){
+                let optionElement = document.createElement('option'); 
+                optionElement.value = items.content.team_name;
+                optionElement.textContent = items.content.team_name;
+                if (items.content.team_name === values[2]) {
+                    optionElement.selected = true;
+                }
+                selectBox.appendChild(optionElement);
+                });
+
+            });
         };
         
     </script>
