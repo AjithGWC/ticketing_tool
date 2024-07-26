@@ -226,55 +226,85 @@ if(window.location.pathname == "/add_team.html"){
       optionElement.textContent = items.displayName;
       selectBox.appendChild(optionElement);
     });
+    // let divElement = document.createElement('div');
+        
+    //     // Set attributes and inner HTML
+    //     divElement.setAttribute('data-selectable', "");
+    //     divElement.setAttribute('data-value', key);
+    //     divElement.classList.add('option');
+    //     divElement.setAttribute('role', 'option');
+    //     divElement.setAttribute('id', `tomselect-4-opt-${key}`);
+    //     divElement.setAttribute('aria-selected', "");
+    //     divElement.textContent = items.displayName;
+
+    //     // Append the created div to selectBox
+    //     selectBox.appendChild(divElement);
+    //     console.log(selectBox);
   });
 }
 
-function redirectTeam(){
-  let alert = document.getElementById('add_team_success');
-  alert.style.display = "block";
-  
+async function redirectTeam(){
+  let confrim = "";
   let team_name = document.getElementById('add_ticket_team_name').value;
-  let selectElement = document.getElementById('add_ticket_team_member');
-  let selectedOptions = Array.from(selectElement.selectedOptions).map(option => option.value);
-
-  let displayName = localStorage.getItem('user_id');
-
-  if(team_name == ''){
-    alert('Team Name cannot be empty');
-  }else if(selectElement == ''){
-    alert('User cannot be empty');
-  }else{
-    selectedOptions.forEach(function (personId) {
-      domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
-        data.forEach(function(ids){
-          if(ids.displayName == personId){
-            let to = ids.detail.email;
-            SendEmail(to);
-          }
-        });
-      });
+  await domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(teams){
+    let team_names = "";
+    teams.forEach(function(team){
+      team_names = team.content.team_name;
+      if(team_names == team_name){
+        confrim = team_name;
+      }
     });
-    function SendEmail(to) {
-      // console.log(to);
-      async function startWorkflow(alias, body) {
-        console.log(to);
-        const response = await domo.post(`/domo/workflow/v1/models/${alias}/start`, body);
+    
+    if(confrim == ""){
+      let alert = document.getElementById('add_team_success');
+      alert.style.display = "block";
+
+      let selectElement = document.getElementById('add_ticket_team_member');
+      let selectedOptions = Array.from(selectElement.selectedOptions).map(option => option.value);
+
+      let displayName = localStorage.getItem('user_id');
+
+      if(team_name == ''){
+        alert('Team Name cannot be empty');
+      }else if(selectElement == ''){
+        alert('User cannot be empty');
+      }else{
+        selectedOptions.forEach(function (personId) {
+          domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+            data.forEach(function(ids){
+              if(ids.displayName == personId){
+                let to = ids.detail.email;
+                SendEmail(to);
+              }
+            });
+          });
+        });
+        function SendEmail(to) {
+          // console.log(to);
+          async function startWorkflow(alias, body) {
+            console.log(to);
+            const response = await domo.post(`/domo/workflow/v1/models/${alias}/start`, body);
+          }
+          startWorkflow("send_email", { to: to, subject: "Test by Ajith", body: "Please ignore this" });
+        }
+        const request = {
+          "content":{
+            'team_name': `${team_name}`,
+            'team_members': `${selectedOptions}`,
+            'created_by_name': `${displayName}`,
+          }
+        }
+        // console.log(request);
+        domo.post(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`, request); 
+        setTimeout(() => {
+          window.location.href = "/user_index.html";
+        }, 3000);
       }
-      startWorkflow("send_email", { to: to, subject: "Test by Ajith", body: "Please ignore this" });
+    }else{
+      let modal = document.getElementById("programmatically-modal");
+      modal.style.display = "block";
     }
-    const request = {
-      "content":{
-        'team_name': `${team_name}`,
-        'team_members': `${selectedOptions}`,
-        'created_by_name': `${displayName}`,
-      }
-    }
-    // console.log(request);
-    domo.post(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`, request); 
-    setTimeout(() => {
-      window.location.href = "/user_index.html";
-    }, 3000);
-  }
+  });
 }
 
 if(window.location.pathname == "/user_index.html"){
