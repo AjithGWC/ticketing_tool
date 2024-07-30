@@ -10,12 +10,12 @@ if(window.location.pathname == "/"){
       }
     });
   });
-  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Ticket_tb/documents/`).then(function(datas){
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Ticket_tb/documents/`).then(async function(datas){
     // console.log(datas);
     let index = document.getElementById('ticket_index');
     index.script = 'dist/css/app.css';
     let html = '';
-    datas.forEach(function(item, key){
+    datas.forEach(async function(item, key){
       // console.log(item);
       let id = item.id;
       html = `
@@ -62,7 +62,7 @@ if(window.location.pathname == "/"){
 }
 console.log(window.location.pathname);
 if(window.location.pathname == "/add_ticket.html"){
-  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(async function(datas){
     console.log(datas);
     const selectBox = document.getElementById('add_ticket_team_name');
     domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
@@ -90,7 +90,7 @@ if(window.location.pathname == "/edit_ticket.html"){
       }
     });
   });
-  function getQueryParams() {
+  async function getQueryParams() {
     let params = {};
     let queryString = window.location.search.slice(1);
     // console.log(queryString);
@@ -107,7 +107,7 @@ if(window.location.pathname == "/edit_ticket.html"){
   let values = edit.split(',');
   console.log(values);
 
-  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(async function(datas){
     // console.log(datas);
     const selectBox = document.getElementById('edit_ticket_team_name');
     console.log(selectBox);
@@ -125,7 +125,7 @@ if(window.location.pathname == "/edit_ticket.html"){
   });
 }
 
-function redirectTicket() {
+async function redirectTicket() {
   let alert = document.getElementById('add_ticket_success');
   alert.style.display = "block";
   
@@ -157,7 +157,7 @@ function redirectTicket() {
   } 
 }
 
-function EditTicket(id){
+async function EditTicket(id){
   domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Ticket_tb/documents/${id}`).then(function(edit){
     console.log(domo.env.userId);
     let editArray = [];
@@ -172,7 +172,7 @@ function EditTicket(id){
   });
 }
 
-function redirectEditTicket(update){
+async function redirectEditTicket(update){
   console.log(domo.env.userId);
   let alert = document.getElementById('edit_ticket_success');
   alert.style.display = "block";
@@ -197,7 +197,7 @@ function redirectEditTicket(update){
   }, 3000);
 }
 
-function DeleteTicket(id) {
+async function DeleteTicket(id) {
   // console.log(id);
   let alert = document.getElementById('delete_ticket_success');
   alert.style.display = "block";
@@ -207,8 +207,6 @@ function DeleteTicket(id) {
   }, 3000);
 }
 
-
-
 if(window.location.pathname == "/add_team.html"){
   domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
     data.forEach(async function(items){
@@ -217,14 +215,17 @@ if(window.location.pathname == "/add_team.html"){
       }
     });
   });
-  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(function(data){
+  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
     const selectBox = document.getElementById('add_ticket_team_member');
 
     data.forEach(async function(items){
-      let optionElement = document.createElement('option'); 
-      optionElement.value = items.displayName;
-      optionElement.textContent = items.displayName;
-      selectBox.appendChild(optionElement);
+      // let optionElement = document.createElement('option'); 
+      // optionElement.value = items.displayName;
+      // optionElement.textContent = items.displayName;
+      // selectBox.appendChild(optionElement);
+
+        $('.users').append(new Option(items.displayName, items.displayName));
+      
     });
     // let divElement = document.createElement('div');
         
@@ -246,7 +247,7 @@ if(window.location.pathname == "/add_team.html"){
 async function redirectTeam(){
   let confrim = "";
   let team_name = document.getElementById('add_ticket_team_name').value;
-  await domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(teams){
+  await domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(async function(teams){
     let team_names = "";
     teams.forEach(function(team){
       team_names = team.content.team_name;
@@ -279,7 +280,7 @@ async function redirectTeam(){
             });
           });
         });
-        function SendEmail(to) {
+        async function SendEmail(to) {
           // console.log(to);
           async function startWorkflow(alias, body) {
             console.log(to);
@@ -315,7 +316,7 @@ if(window.location.pathname == "/user_index.html"){
       }
     });
   });
-  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(function(datas){
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/`).then(async function(datas){
     // console.log(datas);
     let index = document.getElementById('team_list');
     index.script = 'dist/css/app.css';
@@ -385,11 +386,11 @@ if(window.location.pathname == "/user_index.html"){
   });
 }
 
-function EditTeam(id){
-  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/${id}`).then(function(edit){
+async function EditTeam(id){
+  domo.get(`/domo/datastores/v1/collections/Ticket_Manager_Team_tb/documents/${id}`).then(async function(edit){
     
     let editArray = [];
-    let team_members = (edit.content.team_members).split(',')
+    // let team_members = (edit.content.team_members).split(',')
     editArray.push(edit.content.team_name);
     editArray.push(edit.content.team_members);
     editArray.push(edit.id);
@@ -408,44 +409,41 @@ if(window.location.pathname == "/edit_team.html"){
       }
     });
   });
-  function getQueryParams() {
-    let params = {};
-    let queryString = window.location.search.slice(1);
-    let pairs = queryString.split('&');
-    // console.log(pairs);
-    pairs.forEach(function(pair) {
-        let [key, value] = pair.split('=');
-        params[decodeURIComponent(key)] = decodeURIComponent(value || '');
-    });
-    return params;
-  }
+  // function getQueryParams() {
+  //   let params = {};
+  //   let queryString = window.location.search.slice(1);
+  //   let pairs = queryString.split('&');
+  //   pairs.forEach(function(pair) {
+  //       let [key, value] = pair.split('=');
+  //       params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+  //   });
+  //   return params;
+  // }
 
-  let queryParams = getQueryParams();
-  let edit = queryParams['edit'];
-  let values = edit.split(',');
-  let centerValues = values.slice(1, -1)
-  console.log(centerValues);
+  // let queryParams = getQueryParams();
+  // let edit = queryParams['edit'];
+  // let values = edit.split(',');
+  // let centerValues = values.slice(1, -1)
+  // console.log(centerValues);
 
-  domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
-    // console.log(data);
-    const selectBox = document.getElementById('edit_ticket_team_member');
+  // domo.get("/domo/users/v1?includeDetails=true&limit=200").then(async function(data){
+  //   const selectBox = document.getElementById('edit_ticket_team_member');
 
-    data.forEach(async function(items){
-      // console.log(items);
-      let optionElement = document.createElement('option'); 
-      optionElement.value = items.displayName;
-      optionElement.textContent = items.displayName;
-      centerValues.forEach(function(member){
-        if (items.displayName === member) {
-          optionElement.selected = true;
-        }
-      });
-      selectBox.appendChild(optionElement);
-    });
-  });
+  //   data.forEach(async function(items){
+  //     let optionElement = document.createElement('option'); 
+  //     optionElement.value = items.displayName;
+  //     optionElement.textContent = items.displayName;
+  //     centerValues.forEach(function(member){
+  //       if (items.displayName === member) {
+  //         optionElement.selected = true;
+  //       }
+  //     });
+  //     selectBox.appendChild(optionElement);
+  //   });
+  // });
 }
 
-function redirectUpdateTeam(update){
+async function redirectUpdateTeam(update){
   // console.log(update);
   let alert = document.getElementById('editteam_success');
   alert.style.display = "block";
@@ -483,7 +481,7 @@ function redirectUpdateTeam(update){
     //     });
     // }
   });
-  function SendEmail(to) {
+  async function SendEmail(to) {
     // console.log(to);
 
     async function startWorkflow(alias, body) {
@@ -507,7 +505,7 @@ function redirectUpdateTeam(update){
   }, 3000);
 }
 
-function DeleteTeam(id) {
+async function DeleteTeam(id) {
   // console.log(id);
   let alert = document.getElementById('delete_team_success');
   alert.style.display = "block";

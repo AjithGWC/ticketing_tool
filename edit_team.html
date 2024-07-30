@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="dist/css/app.css" />
     <link rel="stylesheet" href="styles/app.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/select2.js"></script>
 
   </head>
   <style>
@@ -31,6 +34,10 @@
     }
     .w-ts {
       width: 450px;
+    }
+    .ml-i{
+      margin-left: 5.668rem;
+      border-color: rgb(170, 171, 172) !important;
     }
   </style>
   <body class="py-5">
@@ -89,14 +96,8 @@
 
     <script src="https://unpkg.com/ryuu.js"></script>
     <script src="js/app.js"></script>
-    <script src="dist/js/app.js"></script>
+    <!-- <script src="dist/js/app.js"></script> -->
 
-    <script>
-      $(document).ready(function() {
-          $('.users').chosen();
-      });
-
-    </script>
     <script>
         function getQueryParams() {
             let params = {};
@@ -123,7 +124,7 @@
                   <div class="p-5">
                   <div class="flex-col ml-6">
                       <label class="form-control ml-6">Team Name</label>
-                      <input class="form-control ml-6" type="text" name="editticket_team_name" value="${values[0]}" id="editticket_team_name">
+                      <input class="form-control ml-6 ml-i" type="text" name="editticket_team_name" value="${values[0]}" id="editticket_team_name">
                   </div>
                   <div class="flex ml-6 mt-6">
                       <div class="flex">
@@ -148,19 +149,28 @@
             console.log(selectBox);
             data.forEach(async function(items){
               // console.log(items);
-              let optionElement = document.createElement('option'); 
-              optionElement.value = items.displayName;
-              optionElement.textContent = items.displayName;
+              // let optionElement = document.createElement('option'); 
+              // optionElement.value = items.displayName;
+              // optionElement.textContent = items.displayName;
+              var optionElement = new Option(items.displayName, items.displayName);
               centerValues.forEach(function(member){
                 if (items.displayName === member) {
                   console.log(optionElement);
                   optionElement.selected = true;
                 }
               });
-              selectBox.appendChild(optionElement);
+              $('.users').append(optionElement);
             });
           });
         }
+    </script>
+    <script>
+      $(document).ready(function() {
+          $('.users').select2();
+      });
+    </script>
+    <script>
+      feather.replace();
     </script>
   </body>
 </html>
